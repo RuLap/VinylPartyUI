@@ -1,0 +1,1 @@
+NextJS app for vinyl party app where you can input information about vinyl listening sessions with friends, write a review on albums and see a history of parties.
