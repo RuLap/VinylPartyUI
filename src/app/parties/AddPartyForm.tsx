@@ -1,12 +1,30 @@
 "use client";
 
 import { Box, Button, FormControl, Input, InputGroup, InputLeftElement, Stack } from "@chakra-ui/react";
+import { useState } from "react";
 import { useFormStatus } from "react-dom";
 
-export function AddPartyForm() {
+interface AddPartyFormProps {
+  onAddParty: (newParty: { name: string, date: string }) => void;
+}
+
+export function AddPartyForm({ onAddParty  }: AddPartyFormProps) {
+  const [name, setName] = useState("");
+  const [date, setDate] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (name && date) {
+      onAddParty({ name, date });
+      setName("");
+      setDate("");
+    }
+  };
+
   return (
     <Box minW={{ base: "100%", lg: "100%" }}>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Stack
           spacing={4}
           p={"1em"}
@@ -21,7 +39,7 @@ export function AddPartyForm() {
               <Input
                 placeholder="Название"
                 borderWidth={"2px"}
-                //onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setLogin(e.target.value)}
+                onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setName(e.target.value)}
               />
             </InputGroup>
           </FormControl>
@@ -34,7 +52,7 @@ export function AddPartyForm() {
                 type={"datetime-local"}
                 placeholder="Дата и время"
                 borderWidth={"2px"}
-                //onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setLogin(e.target.value)}
+                onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setDate(e.target.value)}
               />
             </InputGroup>
           </FormControl>
