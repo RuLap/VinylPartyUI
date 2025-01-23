@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
+import { Button, Flex, Heading, Stack } from "@chakra-ui/react";
 import { logout } from "../login/actions";
 
 export default function Dashboard() {

@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Card, Flex, Stack, Image, Box, HStack, Badge, CardBody } from "@chakra-ui/react";
+import { Flex, Stack } from "@chakra-ui/react";
 import PartyCard from "./card";
 import AddButton from "../components/AddButton";
 import { MouseEventHandler, useState } from "react";

@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardFooter, Center, Flex, Heading, Image, Stack, StackDivider, Text } from "@chakra-ui/react";
+import { Card, Center, Flex, Heading, Image, Stack, StackDivider, Text } from "@chakra-ui/react";
 
 export default function PartyCard() {
     return (

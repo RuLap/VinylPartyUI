@@ -1,6 +1,6 @@
-import { Button, Card, CardBody, CardFooter, Center, chakra, Flex, Heading, Image, Stack, StackDivider, Text } from "@chakra-ui/react";
+import { Button, chakra } from "@chakra-ui/react";
 import { Add } from "iconic-react";
-import { HtmlHTMLAttributes, MouseEventHandler } from "react";
+import { MouseEventHandler } from "react";
 
 const IconAdd = chakra(Add);
 
