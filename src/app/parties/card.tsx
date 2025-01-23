@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardFooter, Heading, Image, Stack, Text } from "@chakra-ui/react";
+import { Button, Card, CardBody, CardFooter, Center, Flex, Heading, Image, Stack, StackDivider, Text } from "@chakra-ui/react";
 
 export default function PartyCard() {
     return (
@@ -9,30 +9,19 @@ export default function PartyCard() {
           color={'#FFFFFF'}
           bgColor={'#221B12'}
           borderColor={'#E6801A'}
+          borderWidth={'2px'}
           >
-          <Image
-              objectFit='cover'
-              maxW={{ base: '100%', sm: '200px' }}
-              src='https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60'
-              alt='Caffe Latte'
-          />
-
-          <Stack>
-              <CardBody>
-              <Heading size='md'>The perfect latte</Heading>
-
-              <Text py='2'>
-                  Caffè latte is a coffee beverage of Italian origin made with espresso
-                  and steamed milk.
-              </Text>
-              </CardBody>
-
-              <CardFooter>
-              <Button variant='solid' colorScheme='blue'>
-                  Buy Latte
-              </Button>
-              </CardFooter>
-          </Stack>
+          <Flex w='100%'>
+            <Center w='15%' bg='#E6801A' paddingRight={'2px'}>
+                <Text fontSize={'20'} fontWeight={'600'}>#1</Text>
+            </Center>
+            <Center w='90%'>
+              <Stack w='100%' divider={<StackDivider borderColor={'#E6801A'} borderWidth={'1px'}/>} spacing='1'>
+                <Heading paddingLeft={'10px'} paddingTop={'5px'} paddingBottom={'5px'} fontSize={16} w={'100%'}>Потрошители мозгов</Heading>
+                <Text paddingLeft={'10px'} paddingBottom={'5px'} color={'#BBBBBB'} fontSize={12}>23.01.2025 (18:00)</Text>
+              </Stack>
+            </Center>
+          </Flex>
       </Card>
     )
 }
