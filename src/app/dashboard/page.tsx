@@ -11,8 +11,8 @@ export default function Dashboard() {
       align={"center"}
       alignContent={"center"}
       justifyContent={"center"}
-      color={"#FFFFFF"}
-      bgColor={"#221B12"}
+      color={"#000000"}
+      bgColor={"#f7fafc"}
       height={"100vh"}
     >
       <Stack
