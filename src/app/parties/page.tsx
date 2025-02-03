@@ -1,7 +1,7 @@
 "use client"
 
 import { Flex, Stack } from "@chakra-ui/react";
-import PartyCard from "./card";
+import PartyCard from "./PartyCard";
 import AddButton from "../components/AddButton";
 import { MouseEventHandler, useActionState, useEffect, useState } from "react";
 import { AddPartyForm } from "./AddPartyForm";
@@ -17,12 +17,12 @@ export default function Parties() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await parties(); // Вызываем метод загрузки данных
+        const data = await parties();
         setPartyList(data);
       } catch (error) {
         console.error("Ошибка при загрузке данных:", error);
       } finally {
-        setIsLoading(false); // Завершаем состояние загрузки
+        setIsLoading(false);
       }
     };
 
@@ -35,13 +35,12 @@ export default function Parties() {
 
   const handleAddParty = async (newParty: { name: string, date: string }) => {
     try {
-      await saveParty(newParty); // Сохраняем новую вечеринку
+      await saveParty(newParty);
   
-      // Добавляем новую вечеринку в текущий список
       setPartyList(prevList => [
         ...prevList,
         {
-          id: (prevList.length + 1).toString(), // генерируем ID для новой вечеринки
+          id: (prevList.length + 1).toString(),
           name: newParty.name,
           date: newParty.date,
           users: [],

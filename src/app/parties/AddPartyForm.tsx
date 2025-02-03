@@ -1,8 +1,7 @@
 "use client";
 
-import { Box, Button, FormControl, Input, InputGroup, InputLeftElement, Stack } from "@chakra-ui/react";
+import { Box, Button, FormControl, Input, InputGroup, Stack } from "@chakra-ui/react";
 import { useState } from "react";
-import { useFormStatus } from "react-dom";
 
 interface AddPartyFormProps {
   onAddParty: (newParty: { name: string, date: string }) => void;

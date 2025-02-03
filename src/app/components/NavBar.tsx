@@ -86,20 +86,7 @@ export default function NavBar() {
               {name}
             </ChakraLink>
           ))}
-          <Button
-            borderRadius={"5"}
-            marginLeft={"25px"}
-            width={"100px"}
-            bgColor={"#60807f"}
-            color={"#F3F3F3"}
-            fontSize={18}
-            _hover={{
-              bg: "#849ba1"
-            }}
-            onClick={() => logout}
-          >
-            Выйти
-          </Button>
+
         </Flex>        
       </Flex>
     </Box>
