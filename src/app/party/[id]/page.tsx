@@ -1,6 +1,6 @@
 'use client';
 
-import { Flex, Stack, Box, Text, Heading, Container, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel } from "@chakra-ui/react";
+import { Flex, Stack, Box, Text, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel } from "@chakra-ui/react";
 import dynamic from 'next/dynamic';
 import UserCard from "./UserCard";
 
