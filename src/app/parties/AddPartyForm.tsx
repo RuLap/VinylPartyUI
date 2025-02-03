@@ -33,25 +33,21 @@ export function AddPartyForm({ onAddParty  }: AddPartyFormProps) {
         >
           <FormControl>
             <InputGroup>
-              <InputLeftElement
-                pointerEvents={"none"}
-              />
               <Input
                 placeholder="Название"
                 borderWidth={"2px"}
+                color={"#43655a"}
                 onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setName(e.target.value)}
               />
             </InputGroup>
           </FormControl>
           <FormControl>
             <InputGroup>
-              <InputLeftElement
-                pointerEvents={"none"}
-              />
               <Input
                 type={"datetime-local"}
                 placeholder="Дата и время"
                 borderWidth={"2px"}
+                color={"#43655a"}
                 onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setDate(e.target.value)}
               />
             </InputGroup>
@@ -59,23 +55,16 @@ export function AddPartyForm({ onAddParty  }: AddPartyFormProps) {
           <Button
             type={"submit"}
             variant={"solid"}
-            color={"#FFFFFF"}
-            bgColor={"#E6801A"}
+            color={"#f3f3f3"}
+            bgColor={"#849ba1"}
+            _hover={{
+              bg: "#60807f",
+            }}
           >
             Сохранить
           </Button>
         </Stack>
       </form>
     </Box>
-  );
-}
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <button disabled={pending} type="submit">
-      Сохранить
-    </button>
   );
 }

@@ -61,7 +61,7 @@ export default function Parties() {
       alignContent={"center"}
       justifyContent={"center"}
       color={"#FFFFFF"}
-      bgColor={"#f7fafc"}
+      bgColor={"#F3F3F3"}
       justify={"flex-start"}
       paddingTop={{ base: "5%", lg: "2%"}}
       paddingBottom={{ base: "5%", lg: "2%"}}

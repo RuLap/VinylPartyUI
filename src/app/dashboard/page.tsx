@@ -11,8 +11,8 @@ export default function Dashboard() {
       align={"center"}
       alignContent={"center"}
       justifyContent={"center"}
-      color={"#000000"}
-      bgColor={"#f7fafc"}
+      color={"#60807f"}
+      bgColor={"#F3F3F3"}
       height={"100vh"}
     >
       <Stack
@@ -21,8 +21,7 @@ export default function Dashboard() {
         justifyContent={"center"}
         alignItems={"center"}
       >
-        <Heading fontSize={128}>Vinyl Party</Heading>
-        <Button width={"20%"} bgColor={"#E6801A"} fontSize={18} onClick={() => logout}>Logout</Button>
+        <Heading fontSize={128}>Vinyl Party</Heading>        
       </Stack>
     </Flex>
   )

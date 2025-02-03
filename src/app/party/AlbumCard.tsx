@@ -66,7 +66,7 @@ export default function AlbumCard({ imageUrl, title, artist, rating }: AlbumCard
           _dark={{ bg: "blackAlpha.800" }}
           boxShadow="md"
           borderColor="purple.500"
-          _hover={{ bg: "blue.500", color: "whiteAlpha.800" }}
+          _hover={{ bg: "#60807f", color: "#F3F3F3" }}
         >
           Оценить
         </Button>

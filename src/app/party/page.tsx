@@ -60,7 +60,7 @@ export default function Home() {
       <Box
         minH="100vh"
         py={12}
-        bg="gray.50"
+        bg="#F3F3F3"
         _dark={{ bg: "gray.900" }}
       >
         <Container maxW="container.lg">

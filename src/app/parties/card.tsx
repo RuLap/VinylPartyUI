@@ -1,4 +1,4 @@
-import { Card, Center, Flex, Heading, Image, Stack, StackDivider, Text } from "@chakra-ui/react";
+import { Card, CardBody, Center, Flex, Heading, Image, Stack, StackDivider, Text } from "@chakra-ui/react";
 
 interface PartyCardProps {
   id: string;
@@ -9,25 +9,47 @@ interface PartyCardProps {
 export default function PartyCard({id, name, date}: PartyCardProps) {
     return (
         <Card
-          direction={{ base: 'column', sm: 'row' }}
-          overflow='hidden'
-          variant='outline'
-          color={'#000000'}
-          bgColor={"#f7fafc"}
-          borderColor={'#E6801A'}
-          borderWidth={'2px'}
+          w="100%"
+          maxW="600px"
+          borderRadius="xl"
+          overflow="hidden"
+          transition="all 0.3s"
+          _hover={{
+            transform: "translateY(-5px)",
+            boxShadow: "xl",
+            cursor: "pointer"
+          }}
+          position="relative"
+          variant="elevated"
+          bg="white"
+          _dark={{ bg: "gray.700" }}
+        >        
+          <CardBody
+            p={{ base: 4, sm: 6 }}
+            flex="1"
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
           >
-          <Flex w='100%'>
-            <Center w='15%' bg='#E6801A' paddingRight={'2px'}>
-                <Text fontSize={'20'} fontWeight={'600'}>#{id}</Text>
-            </Center>
-            <Center w='90%'>
-              <Stack w='100%' divider={<StackDivider borderColor={'#E6801A'} borderWidth={'1px'}/>} spacing='1'>
-                <Heading paddingLeft={'10px'} paddingTop={'5px'} paddingBottom={'5px'} fontSize={16} w={'100%'}>{name}</Heading>
-                <Text paddingLeft={'10px'} paddingBottom={'5px'} color={'#555555'} fontSize={12}>{date}</Text>
-              </Stack>
-            </Center>
-          </Flex>
+            <Heading 
+              size={{ base: 'md', sm: 'md' }} 
+              noOfLines={2}
+              fontWeight="bold"
+              color="gray.800"
+              _dark={{ color: "whiteAlpha.900" }}
+            >
+              {name}
+            </Heading>
+            
+            <Text
+              fontSize={{ base: 'sm', sm: 'md' }} 
+              color="gray.600"
+              _dark={{ color: "gray.400" }}
+              noOfLines={1}
+            >
+              {date}
+            </Text>
+          </CardBody>
       </Card>
     )
 }
