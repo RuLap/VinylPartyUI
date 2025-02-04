@@ -7,7 +7,9 @@ import { MouseEventHandler, useEffect, useState } from "react";
 import { AddPartyForm } from "./AddPartyForm";
 import CancelButton from "../components/CancelButton";
 import { parties, saveParty } from "./actions";
-import { PartyGet } from "@/types/party";
+import { PartyGet, PartySet } from "@/types/party";
+
+let nextId = 0;
 
 export default function Parties() {
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -19,6 +21,7 @@ export default function Parties() {
       try {
         const data = await parties();
         setPartyList(data);
+        console.log(data);
       } catch (error) {
         console.error("Ошибка при загрузке данных:", error);
       } finally {
@@ -33,20 +36,22 @@ export default function Parties() {
     setIsFormVisible(!isFormVisible);
   }
 
-  const handleAddParty = async (newParty: { name: string, date: string }) => {
+  const handleAddParty = async (newParty: PartySet) => {
     try {
       await saveParty(newParty);
   
       setPartyList(prevList => [
         ...prevList,
         {
-          id: (prevList.length + 1).toString(),
+          id: (prevList.length + 1),
           name: newParty.name,
           date: newParty.date,
           users: [],
           albums: []
         }
       ]);
+
+      nextId = nextId + 1;
 
       setIsFormVisible(false);
     } catch (error) {
@@ -56,7 +61,7 @@ export default function Parties() {
 
   return (
     <Flex
-      align={"center"}
+      align={"top"}
       alignContent={"center"}
       justifyContent={"center"}
       color={"#FFFFFF"}
@@ -72,7 +77,7 @@ export default function Parties() {
           : (<AddButton onClick={handleAddClick} />)
         }       
         {isFormVisible
-          ? (<AddPartyForm onAddParty={handleAddParty} />)
+          ? (<AddPartyForm onAddParty={handleAddParty} partyId={nextId} />)
           : <div />
         }
         {isLoading

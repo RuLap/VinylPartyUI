@@ -1,13 +1,15 @@
-import { Card, CardBody, Center, Flex, Heading, Image, Stack, StackDivider, Text } from "@chakra-ui/react";
+import { Card, CardBody, Center, Flex, Heading, Image, Stack, StackDivider, Text, Link } from "@chakra-ui/react";
+import NextLink from "next/link";
 
 interface PartyCardProps {
-  id: string;
+  id: number;
   name: string;
   date: string;
 }
 
 export default function PartyCard({id, name, date}: PartyCardProps) {
     return (
+      <NextLink href={`/party/${id}`} passHref>
         <Card
           w="100%"
           maxW="600px"
@@ -51,5 +53,6 @@ export default function PartyCard({id, name, date}: PartyCardProps) {
             </Text>
           </CardBody>
       </Card>
+      </NextLink>
     )
 }

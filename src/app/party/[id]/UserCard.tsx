@@ -8,7 +8,7 @@ interface UserCardProps {
   avatar: string;
 }
 
-export default function UserCard({ id, name, avatar }: UserCardProps) {
+export default function UserCard({ name, avatar }: UserCardProps) {
   return (
     <Box
       p={4}
@@ -25,7 +25,7 @@ export default function UserCard({ id, name, avatar }: UserCardProps) {
       w={{ base: "100%", sm: "70%" }}
     >
       <Flex align="center">
-        <Avatar size="md" src={avatar} name={name} mr={6} />
+        <Avatar size="md" src={avatar} name={name} mr={6} marginLeft={"10px"} />
         <Text fontSize="20" fontWeight="bold" color={"black"}>
           {name}
         </Text>

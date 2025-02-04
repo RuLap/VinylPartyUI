@@ -3,60 +3,52 @@
 import { PartyGet, PartySet } from "@/types/party";
 
 export async function parties() {
-	return testParties.sort((a, b) => Number(b.id) - Number(a.id));
+	return partiesData.sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 }
 
 export async function saveParty(party: PartySet) {
 	const partyAdd: PartyGet = {
-		id: (testParties.length + 1).toString(),
+		id: (partiesData.length + 1),
 		name: party.name,
 		date: party.date.toString(),
 		users: [],
 		albums: []
 	};
-	testParties.push(partyAdd);
+	partiesData.push(partyAdd);
 }
 
-const party1: PartyGet = {
-	id: "1",
-	name: "Парти патирк",
-	date: "23.01.2025 (18:00)",
-	users: [],
-	albums: []
-};
-const party2: PartyGet = {
-	id: "2",
-	name: "Хор мальчиков зайчиков",
-	date: "13.12.2024 (19:00)",
-	users: [],
-	albums: []
-};
-const party3: PartyGet = {
-	id: "3",
-	name: "Я вас не звал",
-	date: "01.12.2024 (15:00)",
-	users: [],
-	albums: []
-};
-const party4: PartyGet = {
-	id: "4",
-	name: "Металюжные",
-	date: "25.11.2024 (17:30)",
-	users: [],
-	albums: []
-};
-const party5: PartyGet = {
-	id: "5",
-	name: "Джазовики",
-	date: "10.10.2024 (20:00)",
-	users: [],
-	albums: []
-};
+export async function getParty(id: number) {
+	return partiesData.find(p => p.id == id);
+}
 
-const testParties = [
-	party1,
-	party2,
-	party3,
-	party4,
-	party5
-];
+const partiesData: PartyGet[] = [
+  {
+	id: 1,
+	name: "Вечеринка 1",
+	date: "2023-10-01",
+	users: [
+	  { id: 1, firstName: "Иван", lastName: "Иванов", email: "", avatar: "https://bit.ly/dan-abramov" },
+	  { id: 2, firstName: "Петр", lastName: "Петров", email: "", avatar: "https://bit.ly/kent-c-dodds" },
+	  { id: 3, firstName: "Анатолий", lastName: "Сидоров", email: "", avatar: "https://bit.ly/ryan-florence" },
+	],
+	albums: [
+	  {
+		id: 1,
+		imageUrl: "https://i.scdn.co/image/ab67616d00001e025225e9931a558f6d2f541a7d",
+		title: "Origin Of Symmetry",
+		artist: "Muse",
+		rating: 85,
+		ratedBy: [
+		  { id: 1, firstName: "Иван", lastName: "Иванов", avatar: "https://bit.ly/dan-abramov", rating: 90 },
+		  { id: 2, firstName: "Петр", lastName: "Петров", avatar: "https://bit.ly/kent-c-dodds", rating: 80 },
+		],
+	  },
+	  {
+		id: 2,
+		imageUrl: "https://i.scdn.co/image/ab67616d00001e02e7dd69ac32cf313fde62cbad",
+		title: "Tell Me I'm Pretty",
+		artist: "Cage The Elephant",
+	  },
+	],
+  }
+]

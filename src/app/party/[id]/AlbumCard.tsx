@@ -20,6 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion"; // Импорт анимаций
+import { UserRatingGet } from "@/types/user";
 
 interface AlbumCardProps {
   id: number;
@@ -28,7 +29,7 @@ interface AlbumCardProps {
   artist: string;
   rating?: number;
   onRate?: (rating: number) => void;
-  ratedBy?: { name: string; avatar: string; rating: number }[];
+  ratedBy?: UserRatingGet[];
 }
 
 export default function AlbumCard({ id, imageUrl, title, artist, rating, onRate, ratedBy }: AlbumCardProps) {
@@ -89,8 +90,8 @@ export default function AlbumCard({ id, imageUrl, title, artist, rating, onRate,
               <Stack spacing={2}>
                 {ratedBy?.map((user, index) => (
                   <Flex key={index} align="center">
-                    <Avatar size="sm" src={user.avatar} name={user.name} mr={2} />
-                    <Text fontSize="sm">{user.name}</Text>
+                    <Avatar size="sm" src={user.avatar} name={user.firstName} mr={2} />
+                    <Text fontSize="sm">{user.firstName} {user.lastName}</Text>
                     <Text fontSize="sm" ml="auto" fontWeight="bold" paddingLeft={"5px"}>
                       {user.rating}
                     </Text>
@@ -113,7 +114,7 @@ export default function AlbumCard({ id, imageUrl, title, artist, rating, onRate,
           _dark={{ bg: "blackAlpha.800" }}
           boxShadow="md"
           borderColor="purple.500"
-          _hover={{ bg: "#849ba1", color: "whiteAlpha.800" }}
+          _hover={{ bg: "teal.500", color: "whiteAlpha.800" }}
           onClick={onToggle}
         >
           Оценить

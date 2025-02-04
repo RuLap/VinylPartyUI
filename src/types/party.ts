@@ -1,12 +1,16 @@
+import { AlbumGet } from "./album";
+import { UserGet } from "./user";
+
 export interface PartyGet {
-    id: string;
+    id: number;
     name: string;
     date: string;
-    users: [];
-    albums: [];
+    users: UserGet[];
+    albums: AlbumGet[];
 }
 
 export interface PartySet {
+    id: number;
     name: string;
     date: string;
 }

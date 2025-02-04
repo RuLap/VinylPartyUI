@@ -1,11 +1,15 @@
+import { UserRatingGet } from "./user";
+
 export interface AlbumGet {
-    id: string;
-    name: string;
-    artists: string;
+    id: number;
+    title: string;
+    artist: string;
     imageUrl: string;
+    rating?: number;
+    ratedBy?: UserRatingGet[];
 }
 
 export interface AlbumSet {
-    id: string;
+    id: number;
     spotifyLink: string;
 }

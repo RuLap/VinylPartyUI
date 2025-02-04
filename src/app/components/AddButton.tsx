@@ -11,11 +11,11 @@ type AddButtonProps = {
 export default function AddButton({ onClick }: AddButtonProps) {
     return (
         <Button
-          bg='#abb6be'
+          bg='teal.500'
           color={'#f3f3f3'}
           onClick={onClick}
           _hover={{
-            bg: "#849ba1",
+            bg: "teal.600",
           }}
         >
           <IconAdd boxSize='35' />

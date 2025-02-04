@@ -1,13 +1,15 @@
 "use client";
 
+import { PartySet } from "@/types/party";
 import { Box, Button, FormControl, Input, InputGroup, Stack } from "@chakra-ui/react";
 import { useState } from "react";
 
 interface AddPartyFormProps {
-  onAddParty: (newParty: { name: string, date: string }) => void;
+  onAddParty: (newParty: PartySet) => void;
+  partyId: number;
 }
 
-export function AddPartyForm({ onAddParty  }: AddPartyFormProps) {
+export function AddPartyForm({ onAddParty, partyId }: AddPartyFormProps) {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
 
@@ -15,7 +17,7 @@ export function AddPartyForm({ onAddParty  }: AddPartyFormProps) {
     e.preventDefault();
 
     if (name && date) {
-      onAddParty({ name, date });
+      onAddParty({ id: partyId, name, date });
       setName("");
       setDate("");
     }
@@ -55,9 +57,9 @@ export function AddPartyForm({ onAddParty  }: AddPartyFormProps) {
             type={"submit"}
             variant={"solid"}
             color={"#f3f3f3"}
-            bgColor={"#849ba1"}
+            bgColor={"teal.500"}
             _hover={{
-              bg: "#60807f",
+              bg: "teal.600",
             }}
           >
             Сохранить

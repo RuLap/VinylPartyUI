@@ -1,16 +1,14 @@
 "use client";
 
-import { Box, Flex, Link as ChakraLink, Icon, Text, chakra, Stack, Button } from "@chakra-ui/react";
+import { Box, Flex, Link as ChakraLink, Icon, Text, chakra, Stack } from "@chakra-ui/react";
 import { MusicPlay } from "iconic-react";
 import NextLink from "next/link";
-import { logout } from "../login/actions";
 
 const VinylIcon = chakra(MusicPlay);
 
 export default function NavBar() {
   const navItems = [
     { name: "Вечеринки", path: "/parties" },
-    { name: "Одна вечеринка", path: "/party" },
   ];
 
   return (
