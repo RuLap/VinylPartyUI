@@ -43,15 +43,13 @@ export default function Parties() {
       setPartyList(prevList => [
         ...prevList,
         {
-          id: (prevList.length + 1),
+          id: "",
           name: newParty.name,
           date: newParty.date,
           users: [],
           albums: []
         }
       ]);
-
-      nextId = nextId + 1;
 
       setIsFormVisible(false);
     } catch (error) {

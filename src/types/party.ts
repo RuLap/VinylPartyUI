@@ -2,7 +2,7 @@ import { AlbumGet } from "./album";
 import { UserGet } from "./user";
 
 export interface PartyGet {
-    id: number;
+    id: string;
     name: string;
     date: string;
     users: UserGet[];

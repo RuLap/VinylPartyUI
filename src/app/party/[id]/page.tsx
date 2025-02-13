@@ -21,14 +21,14 @@ export default function Home() {
   const params = useParams();
   const id = params?.id as string;
 
-  const [party, setParty] = useState<PartyGet>();
+  const [party, setParty] = useState<PartyGet | null>(null);
   const [showAlbumInput, setShowAlbumInput] = useState(false);
   const [spotifyLink, setSpotifyLink] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getParty(Number(id));
+        const data = await getParty(id);
         setParty(data);
         console.log(data);
       } catch (error) {

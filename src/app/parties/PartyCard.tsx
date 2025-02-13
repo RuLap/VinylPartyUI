@@ -2,7 +2,7 @@ import { Card, CardBody, Center, Flex, Heading, Image, Stack, StackDivider, Text
 import NextLink from "next/link";
 
 interface PartyCardProps {
-  id: number;
+  id: string;
   name: string;
   date: string;
 }
