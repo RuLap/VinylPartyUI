@@ -13,3 +13,7 @@ export interface AlbumSet {
     id: number;
     spotifyLink: string;
 }
+
+export interface AlbumCreate {
+    spotifyUrl: string
+}
