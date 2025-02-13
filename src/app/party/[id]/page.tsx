@@ -11,6 +11,8 @@ import { getParty } from "@/app/parties/actions";
 import { useEffect, useState } from "react";
 import { PartyGet } from "@/types/party";
 import { useParams } from "next/navigation";
+import { SaveAlbum } from "./actions";
+import { AlbumGet } from "@/types/album";
 
 const AlbumCard = dynamic(() => import('./AlbumCard'), {
   ssr: false,
@@ -39,7 +41,7 @@ export default function Home() {
     if (id) fetchData();
   }, [id]);
 
-  const handleRateAlbum = (albumId: number, rating: number) => {
+  const handleRateAlbum = (albumId: string, rating: number) => {
     console.log(`Оценка для альбома с ID ${albumId}: ${rating}`);
   };
 
@@ -51,10 +53,19 @@ export default function Home() {
     setShowAlbumInput(prev => !prev);
   };
 
-  const handleSaveAlbum = () => {
-    console.log("Сохранить альбом со ссылкой на Spotify:", spotifyLink);
-    setShowAlbumInput(false);
-    setSpotifyLink("");
+  const handleSaveAlbum = async () => {
+    try {
+      console.log(spotifyLink)
+      const result = await SaveAlbum(id, spotifyLink);
+      if (result) {
+        console.log("Альбом успешно сохранён:", result);
+      }
+    } catch (error) {
+      console.error("Ошибка при сохранении альбома:", error);
+    } finally {
+      setShowAlbumInput(false);
+      setSpotifyLink("");
+    }
   };
 
   if (!party) {
@@ -78,6 +89,9 @@ export default function Home() {
       <Stack w={{ base: '90%', lg: '30%' }}>
         <Text fontSize="2xl" fontWeight="bold" color="#60807f">
           {party.name}
+        </Text>
+        <Text fontSize="md" color="gray.600">
+          {party.description}
         </Text>
         <Text fontSize="md" color="gray.600">
           {party.date}

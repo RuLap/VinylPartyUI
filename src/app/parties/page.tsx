@@ -46,6 +46,7 @@ export default function Parties() {
           id: "",
           name: newParty.name,
           date: newParty.date,
+          description: "",
           users: [],
           albums: []
         }

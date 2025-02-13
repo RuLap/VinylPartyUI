@@ -60,6 +60,7 @@ export async function getParty(id: string): Promise<PartyGet | null> {
 		id: data.id,
 		name: data.title,
 		date: data.date,
+		description: data.description,
 		albums: data.albums ? data.albums.map(mapAlbum) : [],
 		users: data.participants,
 	  };

@@ -23,7 +23,7 @@ import { motion, AnimatePresence } from "framer-motion"; // Импорт ани�
 import { UserRatingGet } from "@/types/user";
 
 interface AlbumCardProps {
-  id: number;
+  id: string;
   imageUrl: string;
   title: string;
   artist: string;
@@ -67,7 +67,7 @@ export default function AlbumCard({ id, imageUrl, title, artist, rating, onRate,
       bg="white"
       _dark={{ bg: "gray.700" }}
     >
-      {rating !== undefined ? (
+      {rating !== undefined && rating != 0 ? (
         <Popover trigger="hover" placement="top">
           <PopoverTrigger>
             <Button

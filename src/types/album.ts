@@ -1,7 +1,7 @@
 import { UserRatingGet } from "./user";
 
 export interface AlbumGet {
-    id: number;
+    id: string;
     title: string;
     artist: string;
     imageUrl: string;
