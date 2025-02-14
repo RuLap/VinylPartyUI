@@ -1,17 +1,21 @@
-import { Card, CardBody, Center, Flex, Heading, Image, Stack, StackDivider, Text, Link } from "@chakra-ui/react";
+import { Card, CardBody, Center, Flex, Heading, Image, Stack, StackDivider, Text, Link, chakra, Icon } from "@chakra-ui/react";
 import NextLink from "next/link";
+import {UserOctagon} from "iconic-react"
+
+const userAdmin = chakra(UserOctagon)
 
 interface PartyCardProps {
   id: string;
   name: string;
   date: string;
+  isAdmin: boolean;
 }
 
-export default function PartyCard({id, name, date}: PartyCardProps) {
+export default function PartyCard({id, name, date, isAdmin}: PartyCardProps) {
     return (
       <NextLink href={`/party/${id}`} passHref>
         <Card
-          w="100%"
+          w={"100%"}
           maxW="600px"
           borderRadius="xl"
           overflow="hidden"
@@ -52,6 +56,7 @@ export default function PartyCard({id, name, date}: PartyCardProps) {
               {date}
             </Text>
           </CardBody>
+          {isAdmin ?  <Icon as={userAdmin} boxSize={"20px"} position={"absolute"} top={3} right={3}/> : <Flex />}
       </Card>
       </NextLink>
     )

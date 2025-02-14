@@ -11,6 +11,7 @@ type CancelButtonProps = {
 export default function CancelButton({ onClick }: CancelButtonProps) {
     return (
       <Button
+        w={"100%"}
         bg='teal.500'
         color={'#f3f3f3'}
         onClick={onClick}

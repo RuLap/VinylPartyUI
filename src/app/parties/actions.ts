@@ -50,8 +50,6 @@ export async function getParty(id: string): Promise<PartyGet | null> {
 		method: "GET",
 		cache: "no-store",
 	  });
-  
-	  console.log(response)
 
 	  if (!response.ok) throw new Error("Ошибка загрузки вечеринки");
   
@@ -64,11 +62,6 @@ export async function getParty(id: string): Promise<PartyGet | null> {
 		albums: data.albums ? data.albums.map(mapAlbum) : [],
 		users: data.participants,
 	  };
-
-	  console.log(data)
-
-	  console.log(result)
-
 	  return result
 	} catch (error) {
 	  console.error("getParty error:", error);
@@ -90,3 +83,47 @@ export async function getParty(id: string): Promise<PartyGet | null> {
 	  })) || []
 	};
   }
+
+export async function GetActiveParticipationParties(userId: string): Promise<PartyGet[]> {
+	try {
+		const response = await fetch(`http://localhost:8083/parties/participants/active/${userId}`, {
+			method: "GET",
+			cache: "no-store",
+		});
+
+		if (!response.ok) throw new Error("Ошибка загрузки вечеринок");
+
+		const data = await response.json();
+
+		return data.map((party: any) => ({
+			id: party.ID,
+			name: party.Title,
+			date: party.Date
+		}));
+		} catch (error) {
+		console.error("getParty error:", error);
+		return [];
+	}
+}
+
+export async function GetArchiveParticipationParties(userId: string): Promise<PartyGet[]> {
+	try {
+		const response = await fetch(`http://localhost:8083/parties/participants/archive/${userId}`, {
+			method: "GET",
+			cache: "no-store",
+		});
+
+		if (!response.ok) throw new Error("Ошибка загрузки вечеринок");
+
+		const data = await response.json();
+
+		return data.map((party: any) => ({
+			id: party.ID,
+			name: party.Title,
+			date: party.Date
+		}));
+		} catch (error) {
+		console.error("getParty error:", error);
+		return [];
+	}
+}

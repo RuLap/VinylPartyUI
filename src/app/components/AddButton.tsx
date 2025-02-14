@@ -11,6 +11,7 @@ type AddButtonProps = {
 export default function AddButton({ onClick }: AddButtonProps) {
     return (
         <Button
+          w="100%"
           bg='teal.500'
           color={'#f3f3f3'}
           onClick={onClick}
