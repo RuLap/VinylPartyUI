@@ -1,17 +1,23 @@
 import { AlbumGet } from "./album";
 import { UserGet } from "./user";
 
-export interface PartyGet {
-    id: string;
-    name: string;
-    description: string;
+export interface PartySet {
+    title: string;
     date: string;
-    users: UserGet[];
-    albums: AlbumGet[];
+    description: string;
 }
 
-export interface PartySet {
-    id: number;
-    name: string;
+export type PartyShortGet = PartySet & {
+    id: string,
+    title: string;
     date: string;
+    description: string;
 }
+
+export type PartyGet = PartySet & {
+    id: string;
+    users: UserGet[];
+    albums: AlbumGet[];
+    createdAt: string;
+    updatedAt: string;
+};

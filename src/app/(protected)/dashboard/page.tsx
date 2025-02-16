@@ -1,25 +1,28 @@
 "use client"
 
-import { Flex, Heading, Stack } from "@chakra-ui/react";
+import RotatingImage from "@/app/components/RotatingImage";
+import { Flex, Heading, Stack, Image } from "@chakra-ui/react";
 
 export default function Dashboard() {
 
   return (
     <Flex
       w={"100%"}
+      overflow={"hidden"}
       align={"center"}
       alignContent={"center"}
       justifyContent={"center"}
       color={"#60807f"}
       bgColor={"#F3F3F3"}
-      height={"100vh"}
+      minHeight={"100vh"}
     >
       <Stack
         flexDir={"column"}
-        mb={2}
+        mb={100}
         justifyContent={"center"}
         alignItems={"center"}
       >
+        <RotatingImage src="/images/vinyl-logo.png" width={200} height={200} />
         <Heading fontSize={128}>Vinyl Party</Heading>        
       </Stack>
     </Flex>

@@ -1,50 +1,80 @@
 "use client"
 
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
-import { GetActiveParticipationParties, GetArchiveParticipationParties } from "./actions";
-import { PartyGet } from "@/types/party";
+import { Tab, TabList, TabPanel, TabPanels, Tabs, useToast } from "@chakra-ui/react";
+import { GetUserParties, CreateParty } from "./actions";
+import { PartyGet, PartySet, PartyShortGet } from "@/types/party";
 import PartyList from "./PartyList";
 import { AddPartyButton } from "./AddPartyButton";
 import { useEffect, useState } from "react";
+import { useSession } from "../hooks/use-session";
 
 const PartiesPanel = () => {
-    const [partyData, setPartyData] = useState<PartyGet[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [activeTab, setActiveTab] = useState(0);
+    const { data: session } = useSession()
+    const toast = useToast()
+    const [activeParties, setActiveParties] = useState<PartyShortGet[]>([])
+    const [archivedParties, setArchivedParties] = useState<PartyShortGet[]>([])
+    const [isLoading, setIsLoading] = useState(false)
+    const [isCreating, setIsCreating] = useState(false)
+    const [activeTab, setActiveTab] = useState(0)
 
-    const loadParties = async () => {
-        setIsLoading(true);
+    const loadParties = async (status: "Active" | "Archive") => {
+        if (!session?.user?.id) return
+        
+        setIsLoading(true)
         try {
-            let result: PartyGet[]
-            if(activeTab == 0) {
-                result = await GetActiveParticipationParties("")
+            const result = await GetUserParties(session.user.id, status)
+            if (status === "Active") {
+                setActiveParties(result)
+            } else {
+                setArchivedParties(result)
             }
-            else {
-                result = await GetArchiveParticipationParties("")
-            }
-            setPartyData(result);
         } catch (error) {
-            console.error("Ошибка при загрузке данных:", error);
+            showError("Ошибка загрузки", "Не удалось загрузить список вечеринок")
         } finally {
-            setIsLoading(false);
+            setIsLoading(false)
         }
     };
 
-    const handleAddParty = async (newParty: PartyGet) => {
+    const handleAddParty = async (newParty: PartySet) => {
+        if (!session?.user?.id) return
+        
+        setIsCreating(true)
         try {
-            // Добавляем вечеринку через ваш API или функцию
-            //await addParty(newParty);
-
-            // После добавления обновляем состояние partyData
-            setPartyData((prevParties) => [...prevParties, newParty]);
+            const createdParty = await CreateParty(session.user.id, newParty)
+            if (activeTab === 0) {
+                setActiveParties(prev => [createdParty, ...prev])
+            } else {
+                setArchivedParties(prev => [createdParty, ...prev])
+            }
+            
+            toast({
+                title: "Успешно!",
+                description: "Вечеринка создана",
+                status: "success",
+                duration: 2000,
+            })
         } catch (error) {
-            console.error("Ошибка при добавлении вечеринки:", error);
+            showError("Ошибка создания", "Не удалось создать вечеринку")
+        } finally {
+            setIsCreating(false)
         }
-    };
+    }
+
+    const showError = (title: string, message: string) => {
+        toast({
+            title,
+            description: message,
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+        })
+    }
 
     useEffect(() => {
-        loadParties();
-      }, [activeTab]); 
+        if (session?.user?.id) {
+            loadParties(activeTab === 0 ? "Active" : "Archive");
+        }
+    }, [activeTab, session]); 
 
     return (
         <Tabs
@@ -54,17 +84,17 @@ const PartiesPanel = () => {
             onChange={(index) => setActiveTab(index)}
         >
             <TabList>
-                <Tab>Текущие</Tab>
+                <Tab>Активные</Tab>
                 <Tab>Архив</Tab>
             </TabList>
             <TabPanels>
                 <TabPanel>
-                    <AddPartyButton />
-                    <PartyList parties={partyData} isLoading={isLoading} />
+                    <AddPartyButton onAddParty={handleAddParty} />
+                    <PartyList parties={activeParties} isLoading={isLoading} />
                 </TabPanel>
                 <TabPanel>
-                    <AddPartyButton />
-                    <PartyList parties={partyData} isLoading={isLoading} />
+                    <AddPartyButton onAddParty={handleAddParty} />
+                    <PartyList parties={archivedParties} isLoading={isLoading} />
                 </TabPanel>
             </TabPanels>
         </Tabs>

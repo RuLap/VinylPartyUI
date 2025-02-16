@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
-import { PartyGet } from "@/types/party";
-import { parties } from "./actions";
+import { PartyGet, PartyShortGet } from "@/types/party";
 import PartyCard from "./PartyCard";
-import { Box, Center, Flex, Spinner } from "@chakra-ui/react";
+import { Center, Flex, Spinner } from "@chakra-ui/react";
 
 interface PartyListProps {
-  parties: PartyGet[];
+  parties: PartyShortGet[];
   isLoading: boolean;
 }
 
@@ -19,7 +17,7 @@ function PartyList({ parties, isLoading }: PartyListProps) {
                 </Center>
             )
             : parties.map((party) => (
-                <PartyCard key={party.id} id={party.id} name={party.name} date={party.date} isAdmin={false}/>
+                <PartyCard key={party.id} id={party.id} title={party.title} date={party.date} isAdmin={false}/>
             ))
         }
       

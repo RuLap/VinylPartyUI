@@ -90,8 +90,8 @@ export default function AlbumCard({ id, imageUrl, title, artist, rating, onRate,
               <Stack spacing={2}>
                 {ratedBy?.map((user, index) => (
                   <Flex key={index} align="center">
-                    <Avatar size="sm" src={user.avatar} name={user.firstName} mr={2} />
-                    <Text fontSize="sm">{user.firstName} {user.lastName}</Text>
+                    <Avatar size="sm" src={user.avatar_url} name={user.first_name} mr={2} />
+                    <Text fontSize="sm">{user.first_name} {user.last_name}</Text>
                     <Text fontSize="sm" ml="auto" fontWeight="bold" paddingLeft={"5px"}>
                       {user.rating}
                     </Text>

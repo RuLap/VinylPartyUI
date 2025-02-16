@@ -1,5 +1,3 @@
-import { AlbumCreate } from "@/types/album";
-
 export async function SaveAlbum(partyId: string, spotifyLink: string) {
     try {
         console.log(spotifyLink)

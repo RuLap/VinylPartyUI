@@ -5,21 +5,32 @@ import { Box, Button, FormControl, Input, InputGroup, Stack } from "@chakra-ui/r
 import { useState } from "react";
 
 interface AddPartyFormProps {
-  onAddParty: (newParty: PartySet) => void;
-  partyId: number;
+  onAddParty: (newParty: PartySet) => Promise<void>;
+  onClose: () => void;
 }
 
-export function AddPartyForm({ onAddParty, partyId }: AddPartyFormProps) {
-  const [name, setName] = useState("");
+export function AddPartyForm({ onAddParty, onClose }: AddPartyFormProps) {
+  const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
+  const [description, setDescription] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (name && date) {
-      onAddParty({ id: partyId, name, date });
-      setName("");
-      setDate("");
+    if (title && date) {
+      try {
+        await onAddParty({ 
+          title, 
+          date: new Date(date).toISOString(),
+          description 
+        });
+        onClose();
+        setTitle("");
+        setDate("");
+        setDescription("");
+      } catch (error) {
+        console.error("Ошибка при создании вечеринки:", error);
+      }
     }
   };
 
@@ -32,35 +43,49 @@ export function AddPartyForm({ onAddParty, partyId }: AddPartyFormProps) {
           backgroundColor={"primary"}
           boxShadow={"md"}
         >
-          <FormControl>
+          <FormControl isRequired>
             <InputGroup>
               <Input
                 placeholder="Название"
+                value={title}
                 borderWidth={"2px"}
                 color={"#43655a"}
-                onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setName(e.target.value)}
+                onChange={(e) => setTitle(e.target.value)}
               />
             </InputGroup>
           </FormControl>
-          <FormControl>
+
+          <FormControl isRequired>
             <InputGroup>
               <Input
                 type={"datetime-local"}
-                placeholder="Дата и время"
+                value={date}
                 borderWidth={"2px"}
                 color={"#43655a"}
-                onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setDate(e.target.value)}
+                onChange={(e) => setDate(e.target.value)}
               />
             </InputGroup>
           </FormControl>
+
+          <FormControl>
+            <InputGroup>
+              <Input
+                placeholder="Описание"
+                value={description}
+                borderWidth={"2px"}
+                color={"#43655a"}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </InputGroup>
+          </FormControl>
+
           <Button
-            type={"submit"}
-            variant={"solid"}
-            color={"#f3f3f3"}
-            bgColor={"teal.500"}
-            _hover={{
-              bg: "teal.600",
-            }}
+            type="submit"
+            variant="solid"
+            color="#f3f3f3"
+            bgColor="teal.500"
+            _hover={{ bg: "teal.600" }}
+            isDisabled={!title || !date}
           >
             Сохранить
           </Button>
