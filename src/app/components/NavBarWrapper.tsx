@@ -6,7 +6,7 @@ import NavBar from "./NavBar";
 export default function NavBarWrapper() {
   const pathname = usePathname();
 
-  if (pathname === "/login") return null;
+  if (pathname === "/login" || pathname === "/register") return null;
 
   return <NavBar />;
 }

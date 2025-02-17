@@ -6,6 +6,13 @@ export interface UserGet {
     avatar_url: string;
 }
 
+export interface UserShortGet {
+    id: string;
+    first_name: string;
+    last_name: string;
+    avatar_url: string;
+}
+
 export interface UserSet {
     id: string;
     first_name: string;
@@ -15,11 +22,8 @@ export interface UserSet {
 }
 
 export interface UserRatingGet {
-    id: number;
-    first_name: string;
-    last_name: string;
-    avatar_url: string;
-    rating: number;
+    user: UserShortGet;
+    score: number;
 }
 
 export interface UserLogin {

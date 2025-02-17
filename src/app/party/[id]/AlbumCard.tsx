@@ -88,12 +88,12 @@ export default function AlbumCard({ id, imageUrl, title, artist, rating, onRate,
           <PopoverContent w="auto" maxW="200px">
             <PopoverBody>
               <Stack spacing={2}>
-                {ratedBy?.map((user, index) => (
+                {ratedBy?.map((rating, index) => (
                   <Flex key={index} align="center">
-                    <Avatar size="sm" src={user.avatar_url} name={user.first_name} mr={2} />
-                    <Text fontSize="sm">{user.first_name} {user.last_name}</Text>
+                    <Avatar size="sm" src={rating.user.avatar_url} name={rating.user.first_name} mr={2} />
+                    <Text fontSize="sm">{rating.user.first_name} {rating.user.last_name}</Text>
                     <Text fontSize="sm" ml="auto" fontWeight="bold" paddingLeft={"5px"}>
-                      {user.rating}
+                      {rating.score}
                     </Text>
                   </Flex>
                 ))}
@@ -140,7 +140,7 @@ export default function AlbumCard({ id, imageUrl, title, artist, rating, onRate,
             {title}
           </Heading>
 
-          <Text fontSize="md" color="gray.600" _dark={{ color: "gray.400" }} noOfLines={1}>
+          <Text fontSize="lg" color="gray.600" _dark={{ color: "gray.400" }} noOfLines={1}>
             {artist}
           </Text>
 

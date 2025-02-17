@@ -2,17 +2,17 @@
 
 import { 
   Flex, Button, Stack, Box, Text, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Icon,
-  Collapse, Input, InputGroup, InputRightElement, Spinner
+  Collapse, Input, InputGroup, InputRightElement, Spinner,
+  useToast
 } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import UserCard from "./UserCard";
 import { AddIcon } from "@chakra-ui/icons";
-import { getParty } from "@/app/parties/actions";
 import { useEffect, useState } from "react";
 import { PartyGet } from "@/types/party";
 import { useParams } from "next/navigation";
-import { SaveAlbum } from "./actions";
-import { AlbumGet } from "@/types/album";
+import { CreateAlbum, CreateRating, GetParty } from "./actions";
+import { useSession } from "@/app/hooks/use-session";
 
 const AlbumCard = dynamic(() => import('./AlbumCard'), {
   ssr: false,
@@ -20,8 +20,10 @@ const AlbumCard = dynamic(() => import('./AlbumCard'), {
 });
 
 export default function Home() {
+  const { data: session } = useSession()
   const params = useParams();
   const id = params?.id as string;
+  const toast = useToast()
 
   const [party, setParty] = useState<PartyGet | null>(null);
   const [showAlbumInput, setShowAlbumInput] = useState(false);
@@ -30,9 +32,10 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getParty(id);
-        setParty(data);
-        console.log(data);
+        const data = await GetParty(id);
+        if(data) {
+          setParty(data);
+        }
       } catch (error) {
         console.error("Ошибка при загрузке данных:", error);
       }
@@ -41,8 +44,43 @@ export default function Home() {
     if (id) fetchData();
   }, [id]);
 
-  const handleRateAlbum = (albumId: string, rating: number) => {
-    console.log(`Оценка для альбома с ID ${albumId}: ${rating}`);
+  const handleRateAlbum = async (albumId: string, score: number) => {
+    try {
+      const userId = session.user?.id === null ? "" : session.user!.id
+      console.log(party)
+      const result = await CreateRating({albumId, userId, score});
+      if (result) {
+        setParty(prev => {
+          if (!prev) return prev;
+
+          const updatedAlbums = prev.albums.map(album => {
+            if (album.id === albumId) {
+              return {
+                ...album,
+                ...result,
+              };
+            }
+            return album;
+          });
+
+          return {
+            ...prev,
+            albums: updatedAlbums,
+          }
+        });
+        console.log(party)
+        toast({
+          title: "Успешно!",
+          description: "Альбом оценен",
+          status: "success",
+          duration: 2000,
+      })
+      }
+    } catch (error) {
+      console.error("Ошибка при оценке альбома:", error);
+    } finally {
+      setShowAlbumInput(false);
+    }
   };
 
   const handleAddUser = () => {
@@ -55,10 +93,21 @@ export default function Home() {
 
   const handleSaveAlbum = async () => {
     try {
-      console.log(spotifyLink)
-      const result = await SaveAlbum(id, spotifyLink);
+      const result = await CreateAlbum(id, spotifyLink);
       if (result) {
-        console.log("Альбом успешно сохранён:", result);
+        setParty(prev => {
+          if (!prev) return prev;
+          return {
+            ...prev,
+            albums: [result, ...(prev.albums || [])]
+          }
+        });
+        toast({
+          title: "Успешно!",
+          description: "Альбом добавлен",
+          status: "success",
+          duration: 2000,
+      })
       }
     } catch (error) {
       console.error("Ошибка при сохранении альбома:", error);
@@ -84,11 +133,11 @@ export default function Home() {
       justify="center"
       paddingTop={{ base: "5%", lg: "2%" }}
       paddingBottom={{ base: "5%", lg: "2%" }}
-      minHeight="100vh"
+      minHeight={"calc(100vh - 64px)"}
     >
       <Stack w={{ base: '90%', lg: '30%' }}>
         <Text fontSize="2xl" fontWeight="bold" color="#60807f">
-          {party.name}
+          {party.title}
         </Text>
         <Text fontSize="md" color="gray.600">
           {party.description}
@@ -109,12 +158,13 @@ export default function Home() {
             </AccordionButton>
             <AccordionPanel pb={4}>
               <Flex wrap="wrap" gap={4} justify="flex-start">
-                {party.users?.map((user) => (
+                {party.participants?.map((participant) => (
                   <UserCard
-                    key={user.id}
-                    id={user.id}
-                    name={user.firstName + " " + user.lastName}
-                    avatar={user.avatar}
+                    key={participant.user.id}
+                    id={participant.user.id}
+                    name={participant.user.first_name + " " + participant.user.last_name}
+                    avatar={participant.user.avatar_url}
+                    isAdmin={participant.role == "Admin"}
                   />
                 ))}
                 <Box
@@ -206,11 +256,11 @@ export default function Home() {
                     <AlbumCard
                       key={album.id}
                       id={album.id}
-                      imageUrl={album.imageUrl}
+                      imageUrl={album.cover_url}
                       title={album.title}
                       artist={album.artist}
-                      rating={album.rating}
-                      ratedBy={album.ratedBy}
+                      rating={album.average_rating}
+                      ratedBy={album.ratings}
                       onRate={(rating) => handleRateAlbum(album.id, rating)}
                     />
                   ))}

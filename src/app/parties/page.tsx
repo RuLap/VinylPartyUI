@@ -6,15 +6,13 @@ import PartiesPanel from "./PartiesPanel";
 export default function Parties() {
   return (
     <Flex
-      align={"top"}
-      alignContent={"center"}
-      justifyContent={"center"}
+      align={"flex-start"}
+      justify={"center"}
       color={"#FFFFFF"}
       bgColor={"#F3F3F3"}
-      justify={"flex-start"}
-      paddingTop={{ base: "5%", lg: "2%" }}
+      paddingY={{ base: "5%", lg: "2%" }}
       paddingBottom={{ base: "5%", lg: "2%" }}
-      minHeight={"100vh"}
+      minHeight={"calc(100vh - 64px)"}
     >
       <Stack w={{ base: '90%', lg: '20%' }} alignContent={"center"}>
         <PartiesPanel />

@@ -1,4 +1,4 @@
-import { PartyGet, PartyShortGet } from "@/types/party";
+import { PartyShortGet } from "@/types/party";
 import PartyCard from "./PartyCard";
 import { Center, Flex, Spinner } from "@chakra-ui/react";
 

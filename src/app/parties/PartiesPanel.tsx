@@ -2,7 +2,7 @@
 
 import { Tab, TabList, TabPanel, TabPanels, Tabs, useToast } from "@chakra-ui/react";
 import { GetUserParties, CreateParty } from "./actions";
-import { PartyGet, PartySet, PartyShortGet } from "@/types/party";
+import { PartySet, PartyShortGet } from "@/types/party";
 import PartyList from "./PartyList";
 import { AddPartyButton } from "./AddPartyButton";
 import { useEffect, useState } from "react";

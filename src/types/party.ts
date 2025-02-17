@@ -1,5 +1,6 @@
 import { AlbumGet } from "./album";
 import { UserGet } from "./user";
+import { ParticipantGet } from "./participant"
 
 export interface PartySet {
     title: string;
@@ -9,15 +10,10 @@ export interface PartySet {
 
 export type PartyShortGet = PartySet & {
     id: string,
-    title: string;
-    date: string;
-    description: string;
 }
 
 export type PartyGet = PartySet & {
-    id: string;
-    users: UserGet[];
+    id: string,
+    participants: ParticipantGet[];
     albums: AlbumGet[];
-    createdAt: string;
-    updatedAt: string;
 };

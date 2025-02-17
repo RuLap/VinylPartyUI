@@ -4,9 +4,9 @@ export interface AlbumGet {
     id: string;
     title: string;
     artist: string;
-    imageUrl: string;
-    rating?: number;
-    ratedBy?: UserRatingGet[];
+    cover_url: string;
+    average_rating?: number;
+    ratings?: UserRatingGet[];
 }
 
 export interface AlbumSet {

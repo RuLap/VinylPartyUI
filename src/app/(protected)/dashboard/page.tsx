@@ -8,13 +8,11 @@ export default function Dashboard() {
   return (
     <Flex
       w={"100%"}
-      overflow={"hidden"}
       align={"center"}
-      alignContent={"center"}
-      justifyContent={"center"}
+      justify={"center"}
       color={"#60807f"}
       bgColor={"#F3F3F3"}
-      minHeight={"100vh"}
+      minHeight={"calc(100vh - 64px)"}
     >
       <Stack
         flexDir={"column"}

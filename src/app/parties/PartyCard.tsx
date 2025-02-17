@@ -56,7 +56,7 @@ export default function PartyCard({id, title, date, isAdmin}: PartyCardProps) {
               {date}
             </Text>
           </CardBody>
-          {isAdmin ?  <Icon as={userAdmin} boxSize={"20px"} position={"absolute"} top={3} right={3}/> : <Flex />}
+
       </Card>
       </NextLink>
     )

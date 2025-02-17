@@ -15,11 +15,12 @@ export default function NavBar() {
     <Box 
       as="nav" 
       bg="#F3F3F3"
-      py={4}
       px={{ base: 8, md: 16 }}
       boxShadow="0px 4px 12px rgba(0, 0, 0, 0.2)"
-      position="sticky"
+      position="fixed"
       top={0}
+      left={0}
+      width={"100%"}
       zIndex={10}
       height="64px"
       display="flex"

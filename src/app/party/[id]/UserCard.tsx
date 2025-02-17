@@ -1,35 +1,31 @@
 "use client";
 
-import { Box, Flex, Avatar, Text } from "@chakra-ui/react";
+import { Box, Flex, Avatar, Text, Icon, chakra, Card, CardHeader, Heading } from "@chakra-ui/react";
+import {UserOctagon} from "iconic-react"
+
+const userAdmin = chakra(UserOctagon)
 
 interface UserCardProps {
-  id: number;
+  id: string;
   name: string;
   avatar: string;
+  isAdmin: boolean;
 }
 
-export default function UserCard({ name, avatar }: UserCardProps) {
+export default function UserCard({ id, name, avatar, isAdmin }: UserCardProps) {
   return (
-    <Box
-      p={4}
-      borderWidth="1px"
-      borderRadius="lg"
-      bg="white"
-      _dark={{ bg: "gray.700" }}
-      transition="all 0.3s"
-      _hover={{
-        transform: "translateY(-5px)",
-        boxShadow: "xl",
-        cursor: "pointer",
-      }}
-      w={{ base: "100%", sm: "70%" }}
-    >
-      <Flex align="center">
-        <Avatar size="md" src={avatar} name={name} mr={6} marginLeft={"10px"} />
-        <Text fontSize="20" fontWeight="bold" color={"black"}>
-          {name}
-        </Text>
-      </Flex>
-    </Box>
-  );
+    <Card id={id}>
+      <CardHeader>
+        <Flex>
+          <Flex flex='1' gap='2' alignItems='center' flexWrap='wrap'>
+            <Avatar src={avatar} />
+            <Box>
+              <Heading size='md'>{name}</Heading>
+            </Box>
+          </Flex>
+        </Flex>
+      </CardHeader>
+      {isAdmin ?  <Icon as={userAdmin} boxSize={"20px"} position={"absolute"} top={3} right={3}/> : <Flex />}
+    </Card>
+  )
 }
