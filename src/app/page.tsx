@@ -1,11 +1,27 @@
-// app/page.tsx
 'use client'
-import { Link } from '@chakra-ui/next-js'
+
+import RotatingImage from "@/app/components/RotatingImage";
+import { Flex, Heading, Stack, Image } from "@chakra-ui/react";
 
 export default function Page() {
   return (
-    <Link href='/about' color='blue.400' _hover={{ color: 'blue.500' }}>
-      About
-    </Link>
+    <Flex
+      w={"100%"}
+      align={"center"}
+      justify={"center"}
+      color={"#60807f"}
+      bgColor={"#F3F3F3"}
+      minHeight={"calc(100vh - 64px)"}
+    >
+      <Stack
+        flexDir={"column"}
+        mb={100}
+        justifyContent={"center"}
+        alignItems={"center"}
+      >
+        <RotatingImage src="/images/vinyl-logo.png" width={200} height={200} />
+        <Heading fontSize={128}>Vinyl Party</Heading>        
+      </Stack>
+    </Flex>
   )
 }

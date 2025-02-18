@@ -6,7 +6,7 @@ import { PartySet, PartyShortGet } from "@/types/party";
 import PartyList from "./PartyList";
 import { AddPartyButton } from "./AddPartyButton";
 import { useEffect, useState } from "react";
-import { useSession } from "../hooks/use-session";
+import { useSession } from "../../hooks/use-session";
 
 const PartiesPanel = () => {
     const { data: session } = useSession()

@@ -35,3 +35,14 @@ export interface UserLoginResponse {
     user: UserGet;
     token: string;
 }
+
+export interface UserRegister {
+    email: string;
+    first_name: string;
+    last_name: string;
+    password: string;
+}
+
+export interface UserRegisterResponse {
+    
+}

@@ -2,30 +2,33 @@
 
 import { useEffect, useState } from "react";
 import { useActionState } from "react";
-import { login } from "./actions";
 import { Box, Button, chakra, FormControl, FormErrorMessage, Input, InputGroup, InputLeftElement, InputRightElement, Stack, Text } from "@chakra-ui/react";
-import { Eye, EyeSlash, User, Lock } from "iconic-react";
+import { Eye, EyeSlash, User, Lock, Text as IconInputText } from "iconic-react";
 import { useRouter } from "next/navigation";
+import { register } from "./actions";
 
 const IconUser = chakra(User);
 const IconLock = chakra(Lock);
 const IconEye = chakra(Eye);
 const IconEyeSlash = chakra(EyeSlash);
+const IconText = chakra(IconInputText)
 
 interface FormState {
   error?: string;
   success?: boolean;
 }
 
-export function LoginForm() {
+export function RegisterForm() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   
   const [state, formAction, isPending] = useActionState<FormState, FormData>(
     async (previousState: FormState, formData: FormData) => {
       try {
-        const user = await login({
+        const user = await register({
           email: formData.get("email") as string,
+          first_name: formData.get("firstName") as string,
+          last_name: formData.get("lastName") as string,
           password: formData.get("password") as string
         });
         
@@ -62,7 +65,7 @@ export function LoginForm() {
           <FormControl isInvalid={!!state.error}>
             <InputGroup>
               <InputLeftElement pointerEvents="none">
-                <IconUser color={COLORS.primary} boxSize={5} />
+                <IconUser color={"teal"} boxSize={5} />
               </InputLeftElement>
               <Input
                 name="email"
@@ -78,7 +81,39 @@ export function LoginForm() {
           <FormControl isInvalid={!!state.error}>
             <InputGroup>
               <InputLeftElement pointerEvents="none">
-                <IconLock color={COLORS.primary} boxSize={5} />
+                <IconText color={"teal"} boxSize={5} />
+              </InputLeftElement>
+              <Input
+                name="firstName"
+                type="text"
+                placeholder="Имя"
+                focusBorderColor={COLORS.primary}
+                _placeholder={{ color: 'gray.400' }}
+                required
+              />
+            </InputGroup>
+          </FormControl>
+
+          <FormControl isInvalid={!!state.error}>
+            <InputGroup>
+              <InputLeftElement pointerEvents="none">
+                <IconText color={"teal"} boxSize={5} />
+              </InputLeftElement>
+              <Input
+                name="lastName"
+                type="text"
+                placeholder="Фамилия"
+                focusBorderColor={COLORS.primary}
+                _placeholder={{ color: 'gray.400' }}
+                required
+              />
+            </InputGroup>
+          </FormControl>
+
+          <FormControl isInvalid={!!state.error}>
+            <InputGroup>
+              <InputLeftElement pointerEvents="none">
+                <IconLock color={"teal"} boxSize={5} />
               </InputLeftElement>
               <Input
                 name="password"
@@ -120,7 +155,7 @@ export function LoginForm() {
             loadingText="Вход..."
             width="full"
           >
-            Войти
+            Зарегистрироваться
           </Button>
         </Stack>
       </form>

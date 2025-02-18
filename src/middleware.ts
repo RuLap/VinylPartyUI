@@ -3,9 +3,20 @@ import { getSession } from './app/lib/session';
 
 export async function middleware(request: NextRequest) {
   const session = await getSession(request);
-  
-  if (!session && request.nextUrl.pathname.startsWith('/dashboard')) {
-    return NextResponse.redirect(new URL('/login', request.url));
+  const { pathname } = request.nextUrl;
+
+  const publicRoutes = ["/", "/login", "/register"]
+  const privateRoutes = ["/dashboard", "/parties", "/party{id}"]
+
+  const isPublicRoute = publicRoutes.some((path) => pathname.startsWith(path))
+  const isPrivateRoute = privateRoutes.some((path) => pathname.startsWith(path))
+
+  if (!session && isPrivateRoute) {
+    return NextResponse.redirect(new URL('/login', request.nextUrl))
+  }
+
+  if (session && isPublicRoute) {
+    return NextResponse.redirect(new URL('/', request.nextUrl))
   }
   
   return NextResponse.next();

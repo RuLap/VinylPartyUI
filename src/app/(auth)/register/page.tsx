@@ -1,6 +1,6 @@
 'use client'
 import { Box, Flex, Heading, Stack } from "@chakra-ui/react";
-import { LoginForm } from "./LoginForm";
+import { RegisterForm } from "./RegisterForm";
 
 const COLORS = {
   primary: "#60807f",
@@ -28,9 +28,9 @@ export default function Login() {
           color={COLORS.primary}
           fontSize="2xl"
         >
-          Авторизация
+          Регистрация
         </Heading>        
-        <LoginForm />
+        <RegisterForm />
       </Stack>
     </Flex>
   )

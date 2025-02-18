@@ -2,8 +2,8 @@
 
 import { Flex } from "@chakra-ui/react";
 import { useState } from "react";
-import CancelButton from "../components/CancelButton";
-import AddButton from "../components/AddButton";
+import CancelButton from "../../components/CancelButton";
+import AddButton from "../../components/AddButton";
 import { AddPartyForm } from "./AddPartyForm";
 import { PartySet } from "@/types/party";
 
