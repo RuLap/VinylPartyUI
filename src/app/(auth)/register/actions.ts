@@ -6,7 +6,7 @@ const secretKey = new TextEncoder().encode(process.env.JWT_SECRET!);
 
 export async function register(userRegister: UserRegister): Promise<UserGet> {
   try {
-    const response = await fetch("http://localhost:8083/login", {
+    const response = await fetch("http://localhost:8083/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userRegister),
