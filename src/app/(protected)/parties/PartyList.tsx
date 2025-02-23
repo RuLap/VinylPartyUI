@@ -10,16 +10,16 @@ interface PartyListProps {
 function PartyList({ parties, isLoading }: PartyListProps) {
   return (
     <Flex direction={"column"} w={"100%"} gap={2} px={0} marginTop={"10px"}>
-        {
-            isLoading ? (
-                <Center>
-                    <Spinner size={"lg"} color="black" />
-                </Center>
-            )
-            : parties.map((party) => (
-                <PartyCard key={party.id} id={party.id} title={party.title} date={party.date} isAdmin={false}/>
-            ))
-        }
+      {
+        isLoading ? (
+          <Center>
+              <Spinner size={"lg"} color="black" />
+          </Center>
+        )
+        : parties.map((party) => (
+          <PartyCard key={party.id} id={party.id} title={party.title} date={party.date}/>
+        ))
+      }
       
     </Flex>
   );

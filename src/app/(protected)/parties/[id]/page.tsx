@@ -1,18 +1,18 @@
 "use client";
 
 import { 
-  Flex, Button, Stack, Box, Text, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Icon,
-  Collapse, Input, InputGroup, InputRightElement, Spinner,
-  useToast
+  Flex, Button, Stack, Box, Text, Icon, Input, Spinner, Collapsible
 } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import UserCard from "./UserCard";
-import { AddIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import { PartyGet } from "@/types/party";
 import { useParams } from "next/navigation";
 import { CreateAlbum, CreateRating, GetParty } from "./actions";
 import { useSession } from "@/app/hooks/use-session";
+import { toaster } from "@/components/ui/toaster"
+import { GrAdd } from "react-icons/gr";
+import { AccordionRoot, AccordionItem, AccordionItemTrigger, AccordionItemContent } from "@/components/ui/accordion";
 
 const AlbumCard = dynamic(() => import('./AlbumCard'), {
   ssr: false,
@@ -23,7 +23,6 @@ export default function Home() {
   const { data: session } = useSession()
   const params = useParams();
   const id = params?.id as string;
-  const toast = useToast()
 
   const [party, setParty] = useState<PartyGet | null>(null);
   const [showAlbumInput, setShowAlbumInput] = useState(false);
@@ -69,10 +68,10 @@ export default function Home() {
           }
         });
         console.log(party)
-        toast({
+        toaster.create({
           title: "Успешно!",
           description: "Альбом оценен",
-          status: "success",
+          type: "success",
           duration: 2000,
       })
       }
@@ -102,10 +101,10 @@ export default function Home() {
             albums: [result, ...(prev.albums || [])]
           }
         });
-        toast({
+        toaster.create({
           title: "Успешно!",
           description: "Альбом добавлен",
-          status: "success",
+          type: "success",
           duration: 2000,
       })
       }
@@ -128,10 +127,8 @@ export default function Home() {
   return (
     <Flex
       align="top"
-      color="#FFFFFF"
-      bgColor="#F3F3F3"
       justify="center"
-      paddingTop={{ base: "5%", lg: "2%" }}
+      paddingTop={{ base: "15%", lg: "5%", md: "10%", sm: "25%" }}
       paddingBottom={{ base: "5%", lg: "2%" }}
       minHeight={"calc(100vh - 64px)"}
     >
@@ -146,17 +143,10 @@ export default function Home() {
           {party.date}
         </Text>
 
-        <Accordion allowToggle>
-          <AccordionItem>
-            <AccordionButton color="#60807f" _hover={{ bg: 'gray.50' }}>
-              <Box flex="1" textAlign="left">
-                <Text fontSize="xl" fontWeight="bold">
-                  Участники
-                </Text>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
+        <AccordionRoot collapsible>
+          <AccordionItem value="Участники">
+            <AccordionItemTrigger>Участники</AccordionItemTrigger>
+            <AccordionItemContent pb={4}>
               <Flex wrap="wrap" gap={4} justify="flex-start">
                 {party.participants?.map((participant) => (
                   <UserCard
@@ -167,89 +157,87 @@ export default function Home() {
                     isAdmin={participant.role == "Admin"}
                   />
                 ))}
-                <Box
-                  as="button"
-                  onClick={handleAddUser}
-                  minW="200px"
-                  p={6}
-                  border="2px dashed"
-                  borderColor="gray.300"
-                  borderRadius="xl"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  _hover={{ 
-                    borderColor: 'teal.500',
-                    bg: 'gray.50',
-                    transform: 'scale(0.98)'
-                  }}
-                  transition="all 0.2s"
-                >
-                  <Icon as={AddIcon} w={6} h={6} color="teal.500" />
-                </Box>
-              </Flex>
-            </AccordionPanel>
-          </AccordionItem>
-        </Accordion>
-
-        <Accordion allowToggle>
-          <AccordionItem>
-            <AccordionButton color="#60807f" _hover={{ bg: 'gray.50' }}>
-              <Box flex="1" textAlign="left">
-                <Text fontSize="xl" fontWeight="bold">
-                  Альбомы
-                </Text>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Flex direction="column" gap={4}>
-                <Button
-                  w="100%"
-                  maxW="600px"
-                  h="75px"
-                  bg="white.500"
-                  border="2px dashed"
-                  borderColor="gray.300"
-                  borderRadius="xl"
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="center"
-                  justifyContent="center"
-                  _hover={{ 
-                    borderColor: 'teal.500',
-                    bg: 'gray.50',
-                    transform: 'scale(0.98)'
-                  }}
-                  onClick={handleAddAlbum}
-                  transition="all 0.2s"
-                >
-                  <Icon as={AddIcon} w={7} h={7} color="teal.500" mb={2} />
-                  <Text color="teal.500" fontWeight="semibold">
-                    Добавить альбом
-                  </Text>
-                </Button>
-
-                <Collapse in={showAlbumInput} animateOpacity>
-                  <Box
-                    bg="white.500"
+                <Collapsible.Root>
+                  <Collapsible.Trigger
+                    w="100%"
+                    maxW="600px"
+                    h="75px"
+                    border="2px dashed"
+                    borderColor="gray.300"
+                    borderRadius="xl"
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    _hover={{ 
+                      borderColor: 'teal.500',
+                      bg: 'gray.50',
+                      transform: 'scale(0.98)'
+                    }}
+                    onClick={handleAddUser}
+                    transition="all 0.2s"
                   >
-                    <InputGroup>
-                      <Input
-                        placeholder="Вставьте ссылку на Spotify"
-                        value={spotifyLink}
-                        bg={"white"}
-                        color={"gray.600"}
-                        onChange={(e) => setSpotifyLink(e.target.value)}
-                      />
-                      <InputRightElement width="6rem" mr={2}>
-                        <Button h="1.75rem" size="sm" color={"white.500"} bg={"teal.500"} onClick={handleSaveAlbum}>
-                          Сохранить
-                        </Button>
-                      </InputRightElement>
-                    </InputGroup>
-                  </Box>
-                </Collapse>
+                    <GrAdd color="teal.500" size={"20px"} />
+                    <Text color="teal.500" fontWeight="semibold" paddingRight={"5px"} paddingLeft={"5px"}>
+                      Добавить участника
+                    </Text>
+                  </Collapsible.Trigger>
+                  <Collapsible.Content>
+                  </Collapsible.Content>
+                </Collapsible.Root>
+              </Flex>
+            </AccordionItemContent>
+          </AccordionItem>
+        </AccordionRoot>
+
+        <AccordionRoot collapsible>
+          <AccordionItem value="Альбомы">
+            <AccordionItemTrigger>Альбомы</AccordionItemTrigger>
+            <AccordionItemContent pb={4}>
+              <Flex direction="column" gap={4}>
+                <Collapsible.Root>
+                  <Collapsible.Trigger
+                    w="100%"
+                    maxW="600px"
+                    h="75px"
+                    bg="white.500"
+                    border="2px dashed"
+                    borderColor="gray.300"
+                    borderRadius="xl"
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    _hover={{ 
+                      borderColor: 'teal.500',
+                      bg: 'gray.50',
+                      transform: 'scale(0.98)'
+                    }}
+                    onClick={handleAddAlbum}
+                    transition="all 0.2s"
+                  >
+                    <GrAdd size={"20px"} />
+                    <Text color="teal.500" fontWeight="semibold">
+                      Добавить альбом
+                    </Text>
+                  </Collapsible.Trigger>
+                  <Collapsible.Content>
+                  <Flex
+                    display="flex"
+                    flexDirection="row"
+                    paddingTop={"0.75em"}
+                  >
+                    <Input
+                      placeholder="Вставьте ссылку на Spotify"
+                      value={spotifyLink}
+                      onChange={(e) => setSpotifyLink(e.target.value)}
+                    />
+                    <Button variant={"primary"} onClick={handleSaveAlbum}>
+                      Сохранить
+                    </Button>
+                    </Flex>
+                  </Collapsible.Content>
+                </Collapsible.Root>
 
                 <Flex wrap="wrap" gap={4} justify="center">
                   {party.albums?.map((album) => (
@@ -266,9 +254,9 @@ export default function Home() {
                   ))}
                 </Flex>
               </Flex>
-            </AccordionPanel>
+            </AccordionItemContent>
           </AccordionItem>
-        </Accordion>
+        </AccordionRoot>
       </Stack>
     </Flex>
   );

@@ -24,7 +24,7 @@ export default function NavBarItems({ navItems }: NavBarItemsProps) {
             transition="all 0.3s ease"
             _hover={{
                 textDecoration: "none",
-                color: "purple.600",
+                color: "teal.600",
                 _after: {
                 transform: "scaleX(1)",
                 },
@@ -36,7 +36,7 @@ export default function NavBarItems({ navItems }: NavBarItemsProps) {
                 left: 0,
                 right: 0,
                 height: "2px",
-                bg: "purple.600",
+                bg: "teal.600",
                 transform: "scaleX(0)",
                 transition: "transform 0.3s ease",
             }}

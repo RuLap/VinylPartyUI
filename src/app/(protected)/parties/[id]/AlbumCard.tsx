@@ -11,16 +11,14 @@ import {
   Input,
   Text,
   useDisclosure,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
   PopoverBody,
-  Avatar,
   Stack,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion"; // Импорт анимаций
+import { motion, AnimatePresence } from "framer-motion";
 import { UserRatingGet } from "@/types/user";
+import { PopoverContent, PopoverRoot, PopoverTrigger } from "@/components/ui/popover";
+import { Avatar } from "@/components/ui/avatar";
 
 interface AlbumCardProps {
   id: string;
@@ -33,7 +31,7 @@ interface AlbumCardProps {
 }
 
 export default function AlbumCard({ id, imageUrl, title, artist, rating, onRate, ratedBy }: AlbumCardProps) {
-  const { isOpen, onToggle } = useDisclosure();
+  const { open, onToggle } = useDisclosure();
   const [inputRating, setInputRating] = useState("");
 
   const getRatingColor = (rating: number) => {
@@ -55,7 +53,7 @@ export default function AlbumCard({ id, imageUrl, title, artist, rating, onRate,
   };
 
   return (
-    <Card
+    <Card.Root
       w="100%"
       maxW="600px"
       borderRadius="xl"
@@ -64,30 +62,25 @@ export default function AlbumCard({ id, imageUrl, title, artist, rating, onRate,
       _hover={{ transform: "translateY(-5px)", boxShadow: "xl", cursor: "pointer" }}
       position="relative"
       variant="elevated"
-      bg="white"
-      _dark={{ bg: "gray.700" }}
     >
       {rating !== undefined && rating != 0 ? (
-        <Popover trigger="hover" placement="top">
-          <PopoverTrigger>
-            <Button
-              size="sm"
-              borderRadius="full"
-              position="absolute"
-              top="3"
-              right="3"
-              px={4}
-              py={2}
-              bg={getRatingColor(rating)}
-              color="white"
-              _hover={{ bg: getRatingColor(rating) }}
-            >
-              {rating}
-            </Button>
+        <PopoverRoot>
+          <PopoverTrigger
+            borderRadius="full"
+            position="absolute"
+            top="3"
+            right="3"
+            px={4}
+            py={2}
+            bg={getRatingColor(rating)}
+            color="white"
+            _hover={{ bg: getRatingColor(rating) }}
+          >
+            {rating}
           </PopoverTrigger>
           <PopoverContent w="auto" maxW="200px">
             <PopoverBody>
-              <Stack spacing={2}>
+              <Stack gap={2}>
                 {ratedBy?.map((rating, index) => (
                   <Flex key={index} align="center">
                     <Avatar size="sm" src={rating.user.avatar_url} name={rating.user.first_name} mr={2} />
@@ -100,7 +93,7 @@ export default function AlbumCard({ id, imageUrl, title, artist, rating, onRate,
               </Stack>
             </PopoverBody>
           </PopoverContent>
-        </Popover>
+        </PopoverRoot>
       ) : (
         <Button
           size="sm"
@@ -110,11 +103,7 @@ export default function AlbumCard({ id, imageUrl, title, artist, rating, onRate,
           right="3"
           px={4}
           py={2}
-          bg="whiteAlpha.800"
-          _dark={{ bg: "blackAlpha.800" }}
           boxShadow="md"
-          borderColor="purple.500"
-          _hover={{ bg: "teal.500", color: "whiteAlpha.800" }}
           onClick={onToggle}
         >
           Оценить
@@ -136,16 +125,16 @@ export default function AlbumCard({ id, imageUrl, title, artist, rating, onRate,
         </Box>
 
         <CardBody p={6} flex="1" display="flex" flexDirection="column" justifyContent="center">
-          <Heading size="lg" noOfLines={2} fontWeight="bold" color="gray.800" _dark={{ color: "whiteAlpha.900" }}>
+          <Heading size="lg" maxLines={2} fontWeight="bold">
             {title}
           </Heading>
 
-          <Text fontSize="lg" color="gray.600" _dark={{ color: "gray.400" }} noOfLines={1}>
+          <Text fontSize="lg" color="gray.600" _dark={{ color: "gray.400" }} maxLines={1}>
             {artist}
           </Text>
 
           <AnimatePresence>
-            {isOpen && (
+            {open && (
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
@@ -163,7 +152,7 @@ export default function AlbumCard({ id, imageUrl, title, artist, rating, onRate,
                     size="sm"
                     mb={2}
                   />
-                  <Button colorScheme="blue" size="sm" onClick={handleRate} isDisabled={!inputRating}>
+                  <Button colorScheme="blue" size="sm" onClick={handleRate} disabled={!inputRating}>
                     Подтвердить
                   </Button>
                 </Box>
@@ -172,6 +161,6 @@ export default function AlbumCard({ id, imageUrl, title, artist, rating, onRate,
           </AnimatePresence>
         </CardBody>
       </Flex>
-    </Card>
+    </Card.Root>
   );
 }

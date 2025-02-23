@@ -1,7 +1,7 @@
 'use client'
 
 import RotatingImage from "@/app/components/RotatingImage";
-import { Flex, Heading, Stack, Image } from "@chakra-ui/react";
+import { Button, Flex, Heading, Stack } from "@chakra-ui/react";
 
 export default function Page() {
   return (
@@ -9,13 +9,12 @@ export default function Page() {
       w={"100%"}
       align={"center"}
       justify={"center"}
-      color={"#60807f"}
-      bgColor={"#F3F3F3"}
       minHeight={"calc(100vh - 64px)"}
     >
       <Stack
         flexDir={"column"}
         mb={100}
+        gap={100}
         justifyContent={"center"}
         alignItems={"center"}
       >

@@ -1,8 +1,8 @@
 "use client";
 
 import { PartySet } from "@/types/party";
-import { Box, Button, FormControl, Input, InputGroup, Stack } from "@chakra-ui/react";
 import { useState } from "react";
+import { Box, Button, Field, FieldLabel, Input, Stack } from "@chakra-ui/react";
 
 interface AddPartyFormProps {
   onAddParty: (newParty: PartySet) => Promise<void>;
@@ -35,57 +35,46 @@ export function AddPartyForm({ onAddParty, onClose }: AddPartyFormProps) {
   };
 
   return (
-    <Box minW={{ base: "100%", lg: "100%" }}>
+    <Box minW={{ base: "100%", lg: "100%" }} paddingTop={"0.75em"}>
       <form onSubmit={handleSubmit}>
-        <Stack
-          spacing={4}
-          p={"1em"}
-          backgroundColor={"primary"}
-          boxShadow={"md"}
-        >
-          <FormControl isRequired>
-            <InputGroup>
-              <Input
-                placeholder="Название"
-                value={title}
-                borderWidth={"2px"}
-                color={"#43655a"}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </InputGroup>
-          </FormControl>
+        <Stack gap={4} p={"1em"} boxShadow={"md"} rounded={"lg"}>
+          <Field.Root>
+            <FieldLabel>Название</FieldLabel>
+            <Input
+              placeholder="Введите название"
+              value={title}
+              rounded={"lg"}
+              borderWidth={"2px"}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </Field.Root>
 
-          <FormControl isRequired>
-            <InputGroup>
-              <Input
-                type={"datetime-local"}
-                value={date}
-                borderWidth={"2px"}
-                color={"#43655a"}
-                onChange={(e) => setDate(e.target.value)}
-              />
-            </InputGroup>
-          </FormControl>
+          <Field.Root>
+            <FieldLabel>Дата</FieldLabel>
+            <Input
+              type="datetime-local"
+              value={date}
+              rounded={"lg"}
+              borderWidth={"2px"}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </Field.Root>
 
-          <FormControl>
-            <InputGroup>
-              <Input
-                placeholder="Описание"
-                value={description}
-                borderWidth={"2px"}
-                color={"#43655a"}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </InputGroup>
-          </FormControl>
+          <Field.Root>
+            <FieldLabel>Описание</FieldLabel>
+            <Input
+              placeholder="Введите описание"
+              value={description}
+              rounded={"lg"}
+              borderWidth={"2px"}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </Field.Root>
 
           <Button
             type="submit"
-            variant="solid"
-            color="#f3f3f3"
-            bgColor="teal.500"
-            _hover={{ bg: "teal.600" }}
-            isDisabled={!title || !date}
+            variant={"primary"}
+            disabled={!title || !date}
           >
             Сохранить
           </Button>

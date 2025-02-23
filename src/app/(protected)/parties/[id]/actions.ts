@@ -1,7 +1,6 @@
 import { AlbumGet } from "@/types/album";
 import { PartyGet } from "@/types/party";
 import { RatingCreate } from "@/types/rating";
-import { number } from "zod";
 
 export async function CreateAlbum(partyId: string, spotifyLink: string): Promise<AlbumGet | null> {
     try {

@@ -8,9 +8,7 @@ export default function Parties() {
     <Flex
       align={"flex-start"}
       justify={"center"}
-      color={"#FFFFFF"}
-      bgColor={"#F3F3F3"}
-      paddingY={{ base: "5%", lg: "2%" }}
+      paddingTop={{ base: "15%", lg: "5%", md: "10%", sm: "25%" }}
       paddingBottom={{ base: "5%", lg: "2%" }}
       minHeight={"calc(100vh - 64px)"}
     >

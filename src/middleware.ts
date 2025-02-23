@@ -6,16 +6,16 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const publicRoutes = ["/", "/login", "/register"]
-  const privateRoutes = ["/dashboard", "/parties", "/party{id}"]
+  const privateRoutes = ["/dashboard", "/parties", "/party"]
 
-  const isPublicRoute = publicRoutes.some((path) => pathname.startsWith(path))
-  const isPrivateRoute = privateRoutes.some((path) => pathname.startsWith(path))
+  const isPublicRoute = publicRoutes.some(path => pathname === path || pathname.startsWith(path + '/'));
+  const isPrivateRoute = privateRoutes.some(path => pathname.startsWith(path))
 
   if (!session && isPrivateRoute) {
     return NextResponse.redirect(new URL('/login', request.nextUrl))
   }
 
-  if (session && isPublicRoute) {
+  if (session && isPublicRoute && pathname !== '/') {
     return NextResponse.redirect(new URL('/', request.nextUrl))
   }
   

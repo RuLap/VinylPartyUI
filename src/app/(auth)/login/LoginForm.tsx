@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useActionState } from "react";
 import { login } from "./actions";
-import { Box, Button, chakra, FormControl, FormErrorMessage, Input, InputGroup, InputLeftElement, InputRightElement, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, chakra, FormControl, Input, InputGroup, InputLeftElement, InputRightElement, Stack, Text } from "@chakra-ui/react";
 import { Eye, EyeSlash, User, Lock } from "iconic-react";
 import { useRouter } from "next/navigation";
 
@@ -58,7 +58,7 @@ export function LoginForm() {
   return (
     <Box rounded="lg" bg="white" boxShadow="lg" p={8}>
       <form action={formAction}>
-        <Stack spacing={6}>
+        <Stack gap={6}>
           <FormControl isInvalid={!!state.error}>
             <InputGroup>
               <InputLeftElement pointerEvents="none">
@@ -68,7 +68,6 @@ export function LoginForm() {
                 name="email"
                 type="email"
                 placeholder="Email"
-                focusBorderColor={COLORS.primary}
                 _placeholder={{ color: 'gray.400' }}
                 required
               />
@@ -84,7 +83,6 @@ export function LoginForm() {
                 name="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="Пароль"
-                focusBorderColor={COLORS.primary}
                 _placeholder={{ color: 'gray.400' }}
                 required
                 minLength={8}
@@ -116,7 +114,7 @@ export function LoginForm() {
           <Button
             type="submit"
             colorScheme="teal"
-            isLoading={isPending}
+            loading={isPending}
             loadingText="Вход..."
             width="full"
           >
